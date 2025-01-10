@@ -1,5 +1,5 @@
 {
-    "name": "datana-gmbh/doctrine-datetime-milliseconds-type",
+    "name": "oskarstark/doctrine-datetime-milliseconds-type",
     "type": "library",
     "description": "A Doctrine DBAL type to store DateTime with milliseconds",
     "license": "MIT",
