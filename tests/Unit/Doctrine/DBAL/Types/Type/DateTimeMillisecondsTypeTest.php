@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace OskarStark\Doctrine\Type\Tests\Unit\Doctrine\DBAL\Types\Type;
 
-use OskarStark\Doctrine\Testcase\TypeTestCase;
-use OskarStark\Doctrine\Type\Doctrine\DBAL\Types\Type\DateTimeMillisecondsType;
 use Doctrine\DBAL\Platforms\PostgreSQL100Platform;
 use Doctrine\DBAL\Types\Type;
+use OskarStark\Doctrine\Testcase\TypeTestCase;
+use OskarStark\Doctrine\Type\Doctrine\DBAL\Types\Type\DateTimeMillisecondsType;
 
 final class DateTimeMillisecondsTypeTest extends TypeTestCase
 {
