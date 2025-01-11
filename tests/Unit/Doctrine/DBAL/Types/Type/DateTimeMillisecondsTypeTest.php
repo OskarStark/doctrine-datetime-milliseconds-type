@@ -3,18 +3,18 @@
 declare(strict_types=1);
 
 /*
- * This file is part of datana-gmbh/doctrine-datetime-milliseconds-type package.
+ * This file is part of oskarstark/trimmed-non-empty-string.
  *
- * (c) Datana GmbH <info@datana.rocks>
+ * (c) Oskar Stark <oskarstark@googlemail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Datana\Doctrine\Type\Tests\Unit\Doctrine\DBAL\Types\Type;
+namespace OskarStark\Doctrine\Type\Tests\Unit\Doctrine\DBAL\Types\Type;
 
-use Datana\Doctrine\Testcase\TypeTestCase;
-use Datana\Doctrine\Type\Doctrine\DBAL\Types\Type\DateTimeMillisecondsType;
+use OskarStark\Doctrine\Testcase\TypeTestCase;
+use OskarStark\Doctrine\Type\Doctrine\DBAL\Types\Type\DateTimeMillisecondsType;
 use Doctrine\DBAL\Platforms\PostgreSQL100Platform;
 use Doctrine\DBAL\Types\Type;
 
