@@ -3,5 +3,7 @@ vendor
 composer.lock
 .php_cs
 .php_cs.cache
+.php-cs-fixer.cache
+.php-csfixer.cache
 phpunit.xml
 .idea
