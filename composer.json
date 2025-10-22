@@ -15,7 +15,7 @@
         "doctrine/dbal": "^4.0"
     },
     "require-dev": {
-        "oskarstark/doctrine-type-testcases": "^2.6",
+        "oskarstark/doctrine-type-testcases": "^2.7",
         "ergebnis/composer-normalize": "^2.2",
         "ergebnis/test-util": "^1.5",
         "friendsofphp/php-cs-fixer": "^3.0",
