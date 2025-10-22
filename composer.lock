@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6320cbe1461eb3575a61f92e4eed7304",
+    "content-hash": "3ef06e7ccd76be5cec65e22c735b88e2",
     "packages": [
         {
             "name": "doctrine/dbal",
@@ -1794,21 +1794,21 @@
         },
         {
             "name": "oskarstark/doctrine-type-testcases",
-            "version": "2.6.0",
+            "version": "2.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/OskarStark/doctrine-type-testcases.git",
-                "reference": "55b8f11edbbcb8e20a85bd00e4aa23460cb68c14"
+                "reference": "f124a128e71bbc27d1d19120c126bb5e6f5279a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/OskarStark/doctrine-type-testcases/zipball/55b8f11edbbcb8e20a85bd00e4aa23460cb68c14",
-                "reference": "55b8f11edbbcb8e20a85bd00e4aa23460cb68c14",
+                "url": "https://api.github.com/repos/OskarStark/doctrine-type-testcases/zipball/f124a128e71bbc27d1d19120c126bb5e6f5279a8",
+                "reference": "f124a128e71bbc27d1d19120c126bb5e6f5279a8",
                 "shasum": ""
             },
             "require": {
                 "doctrine/dbal": "^2.0 || ^3.0 || ^4.0",
-                "php": ">=8.2",
+                "php": ">=8.1",
                 "phpunit/phpunit": "^10.0 || ^11.0 || ^12.0",
                 "symfony/uid": "^6.0 || ^7.0"
             },
@@ -1843,9 +1843,9 @@
                 "test"
             ],
             "support": {
-                "source": "https://github.com/OskarStark/doctrine-type-testcases/tree/2.6.0"
+                "source": "https://github.com/OskarStark/doctrine-type-testcases/tree/2.7.0"
             },
-            "time": "2025-02-28T10:18:58+00:00"
+            "time": "2025-10-22T12:51:11+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -5753,7 +5753,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.2"
+        "php": ">=8.1"
     },
     "platform-dev": {},
     "plugin-api-version": "2.6.0"
