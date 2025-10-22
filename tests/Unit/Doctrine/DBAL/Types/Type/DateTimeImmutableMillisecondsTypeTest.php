@@ -13,23 +13,36 @@ declare(strict_types=1);
 
 namespace OskarStark\Doctrine\Type\Tests\Unit\Doctrine\DBAL\Types\Type;
 
-use Doctrine\DBAL\Platforms\PostgreSQL100Platform;
 use Doctrine\DBAL\Types\Type;
+use OskarStark\Doctrine\Postgres\Platform\Doctrine\DBAL\Platforms\PostgreSQLMillisecondsPlatform;
 use OskarStark\Doctrine\Testcase\TypeTestCase;
 use OskarStark\Doctrine\Type\Doctrine\DBAL\Types\Type\DateTimeImmutableMillisecondsType;
 
 final class DateTimeImmutableMillisecondsTypeTest extends TypeTestCase
 {
+    private static DateTimeImmutableMillisecondsType $type;
+
+    public static function setUpBeforeClass(): void
+    {
+        parent::setUpBeforeClass();
+
+        self::$type = new DateTimeImmutableMillisecondsType();
+
+        if (Type::getTypeRegistry()->has('datetime_immutable')) {
+            Type::getTypeRegistry()->override('datetime_immutable', self::$type);
+        } else {
+            Type::getTypeRegistry()->register('datetime_immutable', self::$type);
+        }
+    }
+
     /**
      * @test
      */
     public function getSQLDeclaration(): void
     {
-        $type = new DateTimeImmutableMillisecondsType();
-
         self::assertSame(
             'TIMESTAMP(3) WITHOUT TIME ZONE',
-            $type->getSQLDeclaration([], new PostgreSQL100Platform()),
+            self::$type->getSQLDeclaration([], new PostgreSQLMillisecondsPlatform()),
         );
     }
 
@@ -38,10 +51,10 @@ final class DateTimeImmutableMillisecondsTypeTest extends TypeTestCase
      */
     protected static function createType(): Type
     {
-        return new DateTimeImmutableMillisecondsType();
+        return self::$type;
     }
 
-    protected static function name(): string
+    protected static function provideName(): string
     {
         return 'datetime_immutable';
     }
