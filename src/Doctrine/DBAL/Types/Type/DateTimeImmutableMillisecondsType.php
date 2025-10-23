@@ -60,7 +60,7 @@ final class DateTimeImmutableMillisecondsType extends DateTimeImmutableType
         }
 
         if (false === $dateTime) {
-            throw InvalidFormat::new($value, Type::getTypeRegistry()->lookupName($this), 'Y-m-d H:i:s.v');
+            throw InvalidFormat::new($value, \Doctrine\DBAL\Types\Type::getTypeRegistry()->lookupName($this), 'Y-m-d H:i:s.v');
         }
 
         return $dateTime;
