@@ -27,4 +27,40 @@ final class DateTimeMillisecondsType extends DateTimeType
 
         return parent::getSQLDeclaration($column, $platform);
     }
+
+    public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
+    {
+        if (null === $value) {
+            return null;
+        }
+
+        if ($value instanceof \DateTimeInterface) {
+            return $value->format('Y-m-d H:i:s.v');
+        }
+
+        throw InvalidType::new($value, $this->getName(), ['null', \DateTimeInterface::class]);
+    }
+
+    public function convertToPHPValue($value, AbstractPlatform $platform): ?\DateTime
+    {
+        if (null === $value || $value instanceof \DateTime) {
+            return $value;
+        }
+
+        $dateTime = \DateTime::createFromFormat('Y-m-d H:i:s.v', $value);
+
+        if (false === $dateTime) {
+            $dateTime = \DateTime::createFromFormat('Y-m-d H:i:s.u', $value);
+        }
+
+        if (false === $dateTime) {
+            $dateTime = \DateTime::createFromFormat('Y-m-d H:i:s', $value);
+        }
+
+        if (false === $dateTime) {
+            throw InvalidFormat::new($value, $this->getName(), 'Y-m-d H:i:s.v');
+        }
+
+        return $dateTime;
+    }
 }
