@@ -15,6 +15,9 @@ namespace OskarStark\Doctrine\Type\Doctrine\DBAL\Types\Type;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\DateTimeImmutableType;
+use Doctrine\DBAL\Types\Exception\InvalidFormat;
+use Doctrine\DBAL\Types\Exception\InvalidType;
+use Doctrine\DBAL\Types\Type as DBALType;
 use OskarStark\Doctrine\Postgres\Platform\Doctrine\DBAL\Platforms\PostgreSQLMillisecondsPlatform;
 
 final class DateTimeImmutableMillisecondsType extends DateTimeImmutableType
@@ -26,5 +29,45 @@ final class DateTimeImmutableMillisecondsType extends DateTimeImmutableType
         }
 
         return parent::getSQLDeclaration($column, $platform);
+    }
+
+    public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
+    {
+        if (null === $value) {
+            return null;
+        }
+
+        if ($value instanceof \DateTimeInterface) {
+            return $value->format('Y-m-d H:i:s.v');
+        }
+
+        throw InvalidType::new($value, DBALType::getTypeRegistry()->lookupName($this), ['null', \DateTimeInterface::class]);
+    }
+
+    public function convertToPHPValue($value, AbstractPlatform $platform): ?\DateTimeImmutable
+    {
+        if (null === $value || $value instanceof \DateTimeImmutable) {
+            return $value;
+        }
+
+        if (!\is_string($value)) {
+            throw InvalidFormat::new((string) $value, DBALType::getTypeRegistry()->lookupName($this), 'Y-m-d H:i:s.v');
+        }
+
+        $dateTime = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s.v', $value);
+
+        if (false === $dateTime) {
+            $dateTime = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s.u', $value);
+        }
+
+        if (false === $dateTime) {
+            $dateTime = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $value);
+        }
+
+        if (false === $dateTime) {
+            throw InvalidFormat::new($value, DBALType::getTypeRegistry()->lookupName($this), 'Y-m-d H:i:s.v');
+        }
+
+        return $dateTime;
     }
 }
