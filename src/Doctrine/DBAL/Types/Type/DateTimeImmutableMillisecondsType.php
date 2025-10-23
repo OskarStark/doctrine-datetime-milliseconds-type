@@ -15,6 +15,8 @@ namespace OskarStark\Doctrine\Type\Doctrine\DBAL\Types\Type;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\DateTimeImmutableType;
+use Doctrine\DBAL\Types\Exception\InvalidFormat;
+use Doctrine\DBAL\Types\Exception\InvalidType;
 use OskarStark\Doctrine\Postgres\Platform\Doctrine\DBAL\Platforms\PostgreSQLMillisecondsPlatform;
 
 final class DateTimeImmutableMillisecondsType extends DateTimeImmutableType
@@ -38,7 +40,7 @@ final class DateTimeImmutableMillisecondsType extends DateTimeImmutableType
             return $value->format('Y-m-d H:i:s.v');
         }
 
-        throw InvalidType::new($value, $this->getName(), ['null', \DateTimeInterface::class]);
+        throw InvalidType::new($value, \Doctrine\DBAL\Types\Type::getTypeRegistry()->lookupName($this), ['null', \DateTimeInterface::class]);
     }
 
     public function convertToPHPValue($value, AbstractPlatform $platform): ?\DateTimeImmutable
@@ -58,7 +60,7 @@ final class DateTimeImmutableMillisecondsType extends DateTimeImmutableType
         }
 
         if (false === $dateTime) {
-            throw InvalidFormat::new($value, $this->getName(), 'Y-m-d H:i:s.v');
+            throw InvalidFormat::new($value, Type::getTypeRegistry()->lookupName($this), 'Y-m-d H:i:s.v');
         }
 
         return $dateTime;

@@ -47,6 +47,130 @@ final class DateTimeImmutableMillisecondsTypeTest extends TypeTestCase
     }
 
     /**
+     * @test
+     */
+    public function convertToDatabaseValueWithNull(): void
+    {
+        $platform = new PostgreSQLMillisecondsPlatform();
+
+        self::assertNull(self::$type->convertToDatabaseValue(null, $platform));
+    }
+
+    /**
+     * @test
+     */
+    public function convertToDatabaseValueWithDateTimeImmutable(): void
+    {
+        $platform = new PostgreSQLMillisecondsPlatform();
+        $dateTime = new \DateTimeImmutable('2025-10-23 14:30:45.123');
+
+        $result = self::$type->convertToDatabaseValue($dateTime, $platform);
+
+        self::assertSame('2025-10-23 14:30:45.123', $result);
+    }
+
+    /**
+     * @test
+     */
+    public function convertToDatabaseValueWithDateTime(): void
+    {
+        $platform = new PostgreSQLMillisecondsPlatform();
+        $dateTime = new \DateTime('2025-10-23 14:30:45.456');
+
+        $result = self::$type->convertToDatabaseValue($dateTime, $platform);
+
+        self::assertSame('2025-10-23 14:30:45.456', $result);
+    }
+
+    /**
+     * @test
+     */
+    public function convertToDatabaseValueThrowsExceptionForInvalidType(): void
+    {
+        $platform = new PostgreSQLMillisecondsPlatform();
+
+        $this->expectException(\Doctrine\DBAL\Types\Exception\InvalidType::class);
+        $this->expectExceptionMessage('Could not convert PHP value');
+
+        self::$type->convertToDatabaseValue('invalid', $platform);
+    }
+
+    /**
+     * @test
+     */
+    public function convertToPHPValueWithNull(): void
+    {
+        $platform = new PostgreSQLMillisecondsPlatform();
+
+        self::assertNull(self::$type->convertToPHPValue(null, $platform));
+    }
+
+    /**
+     * @test
+     */
+    public function convertToPHPValueWithDateTimeImmutable(): void
+    {
+        $platform = new PostgreSQLMillisecondsPlatform();
+        $dateTime = new \DateTimeImmutable('2025-10-23 14:30:45.123');
+
+        $result = self::$type->convertToPHPValue($dateTime, $platform);
+
+        self::assertSame($dateTime, $result);
+    }
+
+    /**
+     * @test
+     */
+    public function convertToPHPValueWithMillisecondsString(): void
+    {
+        $platform = new PostgreSQLMillisecondsPlatform();
+
+        $result = self::$type->convertToPHPValue('2025-10-23 14:30:45.123', $platform);
+
+        self::assertInstanceOf(\DateTimeImmutable::class, $result);
+        self::assertSame('2025-10-23 14:30:45.123000', $result->format('Y-m-d H:i:s.u'));
+    }
+
+    /**
+     * @test
+     */
+    public function convertToPHPValueWithMicrosecondsString(): void
+    {
+        $platform = new PostgreSQLMillisecondsPlatform();
+
+        $result = self::$type->convertToPHPValue('2025-10-23 14:30:45.123456', $platform);
+
+        self::assertInstanceOf(\DateTimeImmutable::class, $result);
+        self::assertSame('2025-10-23 14:30:45.123456', $result->format('Y-m-d H:i:s.u'));
+    }
+
+    /**
+     * @test
+     */
+    public function convertToPHPValueWithSecondsOnlyString(): void
+    {
+        $platform = new PostgreSQLMillisecondsPlatform();
+
+        $result = self::$type->convertToPHPValue('2025-10-23 14:30:45', $platform);
+
+        self::assertInstanceOf(\DateTimeImmutable::class, $result);
+        self::assertSame('2025-10-23 14:30:45.000000', $result->format('Y-m-d H:i:s.u'));
+    }
+
+    /**
+     * @test
+     */
+    public function convertToPHPValueThrowsExceptionForInvalidFormat(): void
+    {
+        $platform = new PostgreSQLMillisecondsPlatform();
+
+        $this->expectException(\Doctrine\DBAL\Types\Exception\InvalidFormat::class);
+        $this->expectExceptionMessage('Could not convert database value');
+
+        self::$type->convertToPHPValue('invalid-date', $platform);
+    }
+
+    /**
      * @return DateTimeImmutableMillisecondsType
      */
     protected static function createType(): Type
