@@ -50,6 +50,10 @@ final class DateTimeMillisecondsType extends DateTimeType
             return $value;
         }
 
+        if (!\is_string($value)) {
+            throw InvalidFormat::new((string) $value, DBALType::getTypeRegistry()->lookupName($this), 'Y-m-d H:i:s.v');
+        }
+
         $dateTime = \DateTime::createFromFormat('Y-m-d H:i:s.v', $value);
 
         if (false === $dateTime) {

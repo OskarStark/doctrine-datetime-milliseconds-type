@@ -50,6 +50,10 @@ final class DateTimeImmutableMillisecondsType extends DateTimeImmutableType
             return $value;
         }
 
+        if (!\is_string($value)) {
+            throw InvalidFormat::new((string) $value, DBALType::getTypeRegistry()->lookupName($this), 'Y-m-d H:i:s.v');
+        }
+
         $dateTime = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s.v', $value);
 
         if (false === $dateTime) {
